@@ -5,14 +5,12 @@
 var data = {
 	"posts": [
 		{
-			"title": "Whatcha doin?",
-			"text": "What's going on? I'm working with angular and node, hoping" +
-				"to create some cool webapp goodness."
+			"title": "Lorem ipsum",
+			"text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 		},
 		{
-			"title": "Interesting things",
-			"text": "Some interesting things are afoot. I'll give you the deets, but" +
-				"suffice it to say, some things are going on that may prove different."
+			"title": "Sed egestas",
+			"text": "Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus."
 		}
 	]
 };
