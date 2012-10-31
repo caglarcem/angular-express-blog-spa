@@ -5,7 +5,8 @@
 
 var express = require('express'),
   api = require('./routes/api'),
-  Provider = require('./providers/provider-memory').Provider;
+  // Provider = require('./providers/provider-memory').Provider;
+  Provider = require('./providers/provider-mongodb').Provider;
 
 var app = module.exports = express.createServer();
 
@@ -26,7 +27,7 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-var provider = new Provider();
+var provider = new Provider('localhost', 27017);
 
 // JSON API
 // app.get('/api/posts', api.posts);
@@ -60,13 +61,16 @@ app.post('/api/post', function(req, res) {
 
 // app.put('/api/post/:id', api.editPost);
 app.put('/api/post/:id', function(req, res) {
-	provider.update({
-		id: req.params.id,
-		title: req.body.title,
-		text: req.body.text
-	}, function(error, docs) {
-			res.json(req.body);
-	});
+	var id = req.params.id;
+	provider.update(id,
+		{
+			title: req.body.title,
+			text: req.body.text
+		},
+		function(error, docs) {
+				res.json(req.body);
+		}
+	);
 });
 
 // app.delete('/api/post/:id', api.deletePost);
