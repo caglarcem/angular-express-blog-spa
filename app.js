@@ -4,7 +4,8 @@
  */
 
 var express = require('express'),
-  api = require('./routes/api');
+  api = require('./routes/api'),
+  Provider = require('./providers/provider-memory').Provider;
 
 var app = module.exports = express.createServer();
 
@@ -25,12 +26,56 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+var provider = new Provider();
+
 // JSON API
-app.get('/api/posts', api.posts);
-app.get('/api/post/:id', api.post);
-app.post('/api/post', api.addPost);
-app.put('/api/post/:id', api.editPost);
-app.delete('/api/post/:id', api.deletePost);
+// app.get('/api/posts', api.posts);
+app.get('/api/posts', function(req, res) {
+	provider.getAll(function(error, posts) {
+		res.json({
+			posts: posts
+		});
+	});
+});
+
+// app.get('/api/post/:id', api.post);
+app.get('/api/post/:id', function(req, res) {
+	var id = req.params.id;
+	provider.find(id, function(error, post) {
+		res.json({
+			post: post
+		});
+	});
+});
+
+// app.post('/api/post', api.addPost);
+app.post('/api/post', function(req, res) {
+	provider.save({
+		title: req.body.title,
+		text: req.body.text
+	}, function(error, docs) {
+      res.json(req.body);
+  });
+});
+
+// app.put('/api/post/:id', api.editPost);
+app.put('/api/post/:id', function(req, res) {
+	provider.update({
+		id: req.params.id,
+		title: req.body.title,
+		text: req.body.text
+	}, function(error, docs) {
+			res.json(req.body);
+	});
+});
+
+// app.delete('/api/post/:id', api.deletePost);
+app.delete('/api/post/:id', function(req, res) {
+	var id = req.params.id;
+	provider.delete(id, function(error, post) {
+		res.json(req.body);
+	});
+});
 
 // Start server
 app.listen(3000, function(){
