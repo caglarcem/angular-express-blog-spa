@@ -1,10 +1,13 @@
 {
-    "name": "application-name"
+    "name": "angular-express-blog-spa"
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
       "express": "2.5.10"
-    , "jade": ">= 0.0.1"
     , "mongodb": ">= 0.9.6-7"
+  },
+  "engines": {
+    "node": "0.8.14",
+    "npm":  "1.1.65"
   }
 }
